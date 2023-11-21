@@ -9,8 +9,8 @@ Este repositorio ha sido creado para complementar un proyecto para Proyecto FCT.
 
 ## Índice
 
-* [Instalación de SO en servidores](#Instalación de SO)
-* [Docker-compose octoprint](#Docker-compose octoprint)
+* [Instalación de SO en servidores](#Instalación_de_SO)
+* [Docker-compose octoprint](#Docker-compose_octoprint)
 * [Errores conocidos](#errores-conocidos)
 
 -----

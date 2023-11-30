@@ -1,32 +1,93 @@
 version: '2.4'
 
+volumes:
+  prometheus-data:
+  promtail-data:
+
 services:
-  Ender_5_Pro:
-    image: octoprint/octoprint
+
+  prometheus:
+    image: prom/prometheus:v2.28.1
+    container_name: prometheus
+    restart: unless-stopped
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus-data:/prometheus
+    ports:
+      - 9090:9090
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--storage.tsdb.retention.time=1y'
+      - '--web.enable-lifecycle'
+
+  node_exporter:
+    image: quay.io/prometheus/node-exporter:latest
+    container_name: node_exporter
     restart: unless-stopped
     ports:
-      - 5000:5000
-      - 8080:8080
+      - 9100:9100
+    command:
+      - '--path.rootfs=/host'
+    pid: host
+    volumes:
+      - '/:/host:ro,rslave'
+
+  cadvisor:
+    image: zcube/cadvisor
+    container_name: cadvisor
+    restart: unless-stopped
+    expose:
+      - 8080
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+      - /dev/disk/:/dev/disk:ro
+    devices:
+      - /dev/kmsg
+  promtail:
+    image: grafana/promtail:2.3.0
+    container_name: promtail
+    restart: unless-stopped
+    volumes:
+      - /var/log/:/var/log/:ro
+      - /home/:/home_server:ro
+      - /root/:/root_user:ro
+      - ./promtail.yml:/etc/promtail/promtail.yml
+      - promtail-data:/tmp
+    command:
+      - '--config.file=/etc/promtail/promtail.yml'
+
+  ender5pro:
+    image: octoprint/octoprint
+    restart: unless-stopped
+    container_name: ender5pro
+    ports:
+      - 8001:80
     devices:
       - /dev/ttyACM0:/dev/ttyACM0
-      - /dev/video0:/dev/video1
+      - /dev/video0:/dev/video0
     volumes:
-      - /root/octoprint/ender_5_pro:/octoprint
+      - ./ender_5_pro:/octoprint
+
     environment:
       - ENABLE_MJPG_STREAMER=true
-      - CAMERA_DEV=/dev/video1
+      - CAMERA_DEV=/dev/video0
       - MJPG_STREAMER_INPUT=-n -r 1280x960 -f 30
-  Artillery_X1:
+
+  artilleryx1:
     image: octoprint/octoprint
     restart: unless-stopped
+    container_name: artilleryx1
     ports:
-      - 5555:5000
-      - 8081:8080
+      - 8002:80
     devices:
-      - /dev/ttyUSB0:/dev/ttyACM0
+      - /dev/ttyUSB0:/dev/ttyUSB0
       - /dev/video2:/dev/video0
     volumes:
-      - /root/octoprint/artillery_x1:/octoprint
+      - ./artilleryx1:/octoprint
     environment:
       - ENABLE_MJPG_STREAMER=true
       - CAMERA_DEV=/dev/video0

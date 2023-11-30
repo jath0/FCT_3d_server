@@ -20,18 +20,18 @@ La instalación se ha llevado ha llevado a cabo en una raspberry pi que se ocupa
 A su vez dentro de este equipo se instalarán el software que permita envie la información necesaria para la monitorización del mismo. 
 A su vez desde otro equipo se visualizarán los datos recogidos por los diferentes servicios instalados.
 
-### Servicios para la extracción de métricas.
-- Node exporter: Se encargará de obtener las métricas de los recursos del servidor.
-- cAdvisor: Se encarga de obtener las métricas de los recursos usados por los contenedores.
+Servicios para la extracción de métricas.
+* Node exporter: Se encargará de obtener las métricas de los recursos del servidor.
+* cAdvisor: Se encarga de obtener las métricas de los recursos usados por los contenedores.
 
 
-### Servicios para la centralización de métricas.
+Servicios para la centralización de métricas.
 - Prometheus: Se encarga de centralizar las información obtenida de las aplicaciones que extraen las métricas
 - Promtail: recolecta los registros que será mostrado por Grafana Loki
 
-### Servicio visualizador de métricas
-- Grafana: Visualizador de datos.
-- Grafana Loki: Herramienta de Grafana para poder mostrar el contenido de los logs indexados.
+Servicio visualizador de métricas
+* Grafana: Visualizador de datos.
+* Grafana Loki: Herramienta de Grafana para poder mostrar el contenido de los logs indexados.
 
 
 ## Errores conocidos

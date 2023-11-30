@@ -1,6 +1,7 @@
 # FCT_3d_server
 Proyecto FCT: Servidor de impresión 3D y monitorización
-Este repositorio ha sido creado para complementar un proyecto para Proyecto FCT. 
+Este repositorio ha sido creado para complementar el proyecto final 
+del curso de FP Técnico Superior en Administración de Sistemas Informáticos en Red. 
 
 
 * Instalación y configuración Servidor Impresión 3d con Ubuntu server. 
@@ -10,7 +11,6 @@ Este repositorio ha sido creado para complementar un proyecto para Proyecto FCT.
 ## Índice
 
 * [Resumen](#Resumen)
-* [Docker-compose octoprint](#Docker-compose_octoprint)
 * [Errores conocidos](#errores-conocidos)
 
 -----
@@ -26,12 +26,14 @@ Servicios para la extracción de métricas.
 
 
 Servicios para la centralización de métricas.
-- Prometheus: Se encarga de centralizar las información obtenida de las aplicaciones que extraen las métricas
-- Promtail: recolecta los registros que será mostrado por Grafana Loki
+* Prometheus: Se encarga de centralizar las información obtenida de las aplicaciones que extraen las métricas
+* Promtail: recolecta los registros que será mostrado por Grafana Loki
 
 Servicio visualizador de métricas
 * Grafana: Visualizador de datos.
 * Grafana Loki: Herramienta de Grafana para poder mostrar el contenido de los logs indexados.
 
 
+
 ## Errores conocidos
+- Fallan algunas métricas debido a que el servidor usa arquitectura ARM

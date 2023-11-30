@@ -37,3 +37,4 @@ Servicio visualizador de métricas
 
 ## Errores conocidos
 - Fallan algunas métricas debido a que el servidor usa arquitectura ARM
+- Fallan las métricas de red, el dispositivo está por wifi y no detecta esta NIC
